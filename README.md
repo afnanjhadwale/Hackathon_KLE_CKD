@@ -1,3 +1,5 @@
+---
+
 # 🌾 **AgroSmart: Solar-Powered Water Budgeting Smart Irrigation System**
 
 ### 💡 *An IoT-based dual-ESP32 smart irrigation system powered by solar energy, featuring LoRa communication, weather prediction, and water budgeting logic.*
@@ -6,37 +8,46 @@
 
 ## 📘 **Project Overview**
 
-**AgroSmart** is a solar-powered IoT irrigation system that automates and optimizes water use for agriculture.  
-It monitors soil moisture, humidity, temperature, rainfall, tank level, and water flow to deliver the right amount of water at the right time.
+**AgroSmart** is a solar-powered IoT irrigation system designed to automate and optimize water usage for agriculture.
+It intelligently monitors soil moisture, humidity, temperature, rainfall, tank level, and water flow to deliver precise irrigation only when needed.
 
-The system uses **two ESP32 boards**:
-- **Field Node** → Collects sensor data and sends it via **LoRa SX1278**
-- **Home Node** → Receives data, fetches weather info, and controls irrigation using a **relay-controlled water pump**
+The system consists of **two ESP32 nodes**:
 
-It works **offline** via LoRa and **online** via Wi-Fi for cloud/Telegram features.
+* **Field Node** – collects environmental and water data from sensors
+* **Home Node** – processes this data, fetches rain predictions from API, and controls the irrigation pump accordingly
+
+It ensures water conservation, energy efficiency, and farmer convenience through offline **LoRa communication**, **weather-based water budgeting**, and **Telegram alerts**.
 
 ---
 
 ## ⚙️ **System Architecture**
 
-### 🔹 Field Node
-- Powered by **solar panel + battery**
-- Equipped with:
-  - Soil moisture sensor  
-  - DHT11 (temperature & humidity)  
-  - Rain sensor  
-  - Flow sensor (water usage)  
-  - Ultrasonic (tank level)  
-  - Vibration sensor (end-line detection)
-- Sends periodic readings to the home node via **LoRa SX1278**
+### 🔹 Field Node (Remote Unit)
 
-### 🔹 Home Node
-- Receives LoRa data and connects to Wi-Fi
-- Uses **Visual Crossing Weather API** for rain prediction
-- Performs **AI-inspired irrigation logic**  
-- Controls **pump via relay**  
-- Sends **Telegram alerts** for irrigation, water level, and rainfall updates
-- Stores usage data in **EEPROM + Cloud**
+* Powered by **Solar Panel + Battery**
+* Collects data from multiple sensors:
+
+  * 🌱 Soil Moisture Sensor
+  * 🌦 DHT11 (Temperature & Humidity)
+  * 💧 Flow Sensor (Water usage measurement)
+  * ☔ Rain Sensor
+  * 📶 Vibration Sensor (Ensures water reaches end line)
+  * 🫧 Ultrasonic Sensor (Tank water level)
+* Sends processed data to **Home Node** via **LoRa SX1278**
+
+### 🔹 Home Node (Base Station)
+
+* Receives data via LoRa
+* Connects to Wi-Fi for weather data (Visual Crossing API)
+* Calculates irrigation need based on:
+
+  * Soil moisture
+  * Humidity & temperature
+  * Rain prediction
+  * Water availability (tank level)
+* Controls **Pump** through Relay module
+* Logs total water used to **EEPROM + Cloud** for **Water Budgeting**
+* Sends live notifications & pump control via **Telegram Bot**
 
 ---
 
